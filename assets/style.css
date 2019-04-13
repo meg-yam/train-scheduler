@@ -1,0 +1,9 @@
+.jumbotron {
+    padding: 10px;
+    background-color: rgb(231, 181, 53);
+}
+
+img {
+    width: 525px;
+    height: 250px;
+}
