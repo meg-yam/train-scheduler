@@ -15,26 +15,75 @@ $("#btn").on("click", function(event) {
     time = $("#time-form").val().trim();
     frequency = $("#frequency-form").val().trim();
 
+    var tFrequency = frequency;
+    var firstTime = time;
+
+    var firstConvert = moment(firstTime, "HH:mm").subtract(1, "years");
+    console.log(firstConvert)
+
+    var diffTime = moment().diff(moment(firstConvert), "minutes");
+    console.log("Difference: " + diffTime);
+
+    var tRemain = diffTime % tFrequency;
+    console.log(tRemain);
+
+    var tMinutes = tFrequency - tRemain;
+    console.log(tMinutes);
+
+    var next = moment().add(tMinutes, "minutes");
+    console.log("Arrival: " + moment(next).format("HH:mm"));
+    
+    
     newTrain.push({
         Train: train,
         Destination: destination,
         Time: time,
         Frequency: frequency,
+        Minutes: tMinutes,
+        Next: moment(next).format("HH:mm"),
     })
 
+    
 });
 
 newTrain.on("child_added", function(childSnap) {
    var newTable = childSnap.val();
    
     var tRow = $("<tr>");
-
+    
     var trainT = $("<td>").text(newTable.Train);
     var destinationT = $("<td>").text(newTable.Destination);
-    var timeT = $("<td>").text("");
-    var minuteT = $("<td>").text("");
+    var nextT = $("<td>").text(newTable.Next);
+    var minuteT = $("<td>").text(newTable.Minutes);
     var frequencyT = $("<td>").text(newTable.Frequency);
 
-    tRow.append(trainT, destinationT, timeT, minuteT, frequencyT);
-    $("#table").append(tRow);
-});    
+    tRow.append(trainT, destinationT, nextT, minuteT, frequencyT);
+    $("#table").append(tRow);    
+    
+}, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+}); 
+
+// function calculate() {
+//     var tFrequency = frequency;
+//     var firstTime = time;
+
+//     var firstConvert = moment(firstTime, "HH:mm").subtract(1, "years");
+
+//     var currentTime = moment();
+//     console.log("Current time: " + moment(currentTime).format("HH:mm"));
+
+//     var diffTime = moment().diff(moment(firstConvert), "minutes");
+//     console.log("Difference: " + diffTime);
+
+//     var tRemain = diffTime % tFrequency;
+//     console.log(tRemain);
+
+//     var tMinutes = tFrequency - tRemain;
+//     console.log(tMinutes);
+
+//     var next = moment().add(tMinutes, "minutes");
+//     console.log("Arrival: " + moment(next).format("HH:mm"));
+
+// }
+

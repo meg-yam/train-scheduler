@@ -1,3 +1,7 @@
+body {
+    background-image: url("images/blue.jpg");
+}
+
 .jumbotron {
     padding: 10px;
     background-color: rgb(231, 181, 53);
@@ -10,4 +14,9 @@ img {
 
 .table {
     text-align: center;
+    background-color: white;
+}
+
+.title {
+    color: white;
 }
